@@ -10,6 +10,7 @@
   <h1>站点分类与内容</h1>
   <div id="categories"></div>
   <div id="samples"></div>
+  <div id="sitemap"></div> <!-- 新增 sitemap 链接区域 -->
 
   <script src="main.js"></script>
   <script src="data.js"></script>
@@ -19,32 +20,44 @@
     const siteName = urlParams.get('site');
     const site = sites.find(s => s.name === siteName);
 
-    // 渲染分类页面
     window.onload = function() {
       if (site) {
         const categoriesDiv = document.getElementById('categories');
         const samplesDiv = document.getElementById('samples');
+        const sitemapDiv = document.getElementById('sitemap');
 
-        // 渲染分类
+        // 渲染分类页
+        categoriesDiv.innerHTML = '<h2>分类页</h2>';
         site.categories.forEach(category => {
           const categoryLink = document.createElement('a');
           categoryLink.href = category.url;
           categoryLink.textContent = category.title;
           categoryLink.classList.add('category-link');
+          categoryLink.target = "_blank";
           categoriesDiv.appendChild(categoryLink);
           categoriesDiv.appendChild(document.createElement('br'));
         });
 
-        // 生成并渲染样本链接
+        // 渲染随机样本页
+        samplesDiv.innerHTML = '<h2>样本内容页</h2>';
         const samples = genSamples(site, 3);  // 每站随机 3 个样本
         samples.forEach(url => {
           const sampleLink = document.createElement('a');
           sampleLink.href = url;
-          sampleLink.textContent = `样本: ${url}`;
+          sampleLink.textContent = url;
           sampleLink.classList.add('sample-link');
+          sampleLink.target = "_blank";
           samplesDiv.appendChild(sampleLink);
           samplesDiv.appendChild(document.createElement('br'));
         });
+
+        // 渲染 Sitemap 链接
+        if (site.sitemap) {
+          sitemapDiv.innerHTML = `<h2>Sitemap</h2>
+                                  <a href="${site.sitemap}" target="_blank">查看 Sitemap</a>`;
+        }
+      } else {
+        document.body.innerHTML = "<p>未找到站点信息。</p>";
       }
     };
   </script>
