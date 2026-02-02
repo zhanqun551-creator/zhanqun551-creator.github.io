@@ -1,27 +1,30 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8">
-<title>站点首页</title>
-<link rel="stylesheet" href="style.css">
-<script src="data.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>站点目录</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<header>
-    <h1>站点首页</h1>
-</header>
-<div class="container">
-    <h2>全部站点</h2>
-    <ul id="site-list"></ul>
-</div>
+  <h1>站点目录</h1>
+  <div id="site-list"></div>
 
-<script>
-const siteList = document.getElementById('site-list');
-sites.forEach(site => {
-    const li = document.createElement('li');
-    li.innerHTML = `<a href="content.html?url=${encodeURIComponent(site.url)}">${site.name}</a> - ${site.category}`;
-    siteList.appendChild(li);
-});
-</script>
+  <script src="main.js"></script>
+  <script src="data.js"></script>
+  <script>
+    // 加载站点数据并生成站点列表
+    window.onload = function() {
+      const siteListDiv = document.getElementById('site-list');
+      sites.forEach(site => {
+        const link = document.createElement('a');
+        link.href = `site.html?site=${site.name}`;
+        link.textContent = site.name;
+        link.classList.add('site-link');
+        siteListDiv.appendChild(link);
+        siteListDiv.appendChild(document.createElement('br'));
+      });
+    };
+  </script>
 </body>
 </html>
