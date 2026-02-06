@@ -1064,4 +1064,201 @@ const sites = [
       max: 84450       // 最大 ID
     }
   },
+
+  {
+    name: "sinepim.com",
+    home: "https://www.sinepim.com/",
+    sitemap: "https://www.sinepim.com/sitemap.xml",
+    categories: [
+      { title: "seevod-t1", url: "https://www.sinepim.com/seevod/t1.html" },
+      { title: "seevod-t2", url: "https://www.sinepim.com/seevod/t2.html" },
+      { title: "seevod-t3", url: "https://www.sinepim.com/seevod/t3.html" },
+      { title: "seevod-t4", url: "https://www.sinepim.com/seevod/t4.html" }
+    ],
+    content: {
+      dir: "mybox", // 内容页目录
+      min: 1,           // 最小 ID
+      max: 84450       // 最大 ID
+    }
+  },
+
+  {
+    name: "hzscxzc.com",
+    home: "https://www.hzscxzc.com/",
+    sitemap: "https://www.hzscxzc.com/sitemap.xml",
+    categories: [
+      { title: "minzone-t1", url: "https://www.hzscxzc.com/minzone/t1.html" },
+      { title: "minzone-t2", url: "https://www.hzscxzc.com/minzone/t2.html" },
+      { title: "minzone-t3", url: "https://www.hzscxzc.com/minzone/t3.html" },
+      { title: "minzone-t4", url: "https://www.hzscxzc.com/minzone/t4.html" }
+    ],
+    content: {
+      dir: "htmlx", // 内容页目录
+      min: 1,           // 最小 ID
+      max: 84450       // 最大 ID
+    }
+  },
+
+
+  {
+    name: "waxdhq.com",
+    home: "https://www.waxdhq.com/",
+    sitemap: "https://www.waxdhq.com/sitemap.xml",
+    categories: [
+      { title: "malbumbox-t1", url: "https://www.waxdhq.com/malbumbox/t1.html" },
+      { title: "malbumbox-t2", url: "https://www.waxdhq.com/malbumbox/t2.html" },
+      { title: "malbumbox-t3", url: "https://www.waxdhq.com/malbumbox/t3.html" },
+      { title: "malbumbox-t4", url: "https://www.waxdhq.com/malbumbox/t4.html" }
+    ],
+    content: {
+      dir: "subshow", // 内容页目录
+      min: 1,           // 最小 ID
+      max: 84450       // 最大 ID
+    }
+  },
+
+
+
+  {
+    name: "xhjygh.com",
+    home: "https://www.xhjygh.com/",
+    sitemap: "https://www.xhjygh.com/sitemap.xml",
+    categories: [
+      { title: "loveitem-t1", url: "https://www.xhjygh.com/loveitem/t1.html" },
+      { title: "loveitem-t2", url: "https://www.xhjygh.com/loveitem/t2.html" },
+      { title: "loveitem-t3", url: "https://www.xhjygh.com/loveitem/t3.html" },
+      { title: "loveitem-t4", url: "https://www.xhjygh.com/loveitem/t4.html" }
+    ],
+    content: {
+      dir: "livezone", // 内容页目录
+      min: 1,           // 最小 ID
+      max: 84450       // 最大 ID
+    }
+  },
+
+  {
+    name: "syjianfei.com",
+    home: "https://www.syjianfei.com/",
+    sitemap: "https://www.syjianfei.com/sitemap.xml",
+    categories: [
+      { title: "videox-t1", url: "https://www.syjianfei.com/videox/t1.html" },
+      { title: "videox-t2", url: "https://www.syjianfei.com/videox/t2.html" },
+      { title: "videox-t3", url: "https://www.syjianfei.com/videox/t3.html" },
+      { title: "videox-t4", url: "https://www.syjianfei.com/videox/t4.html" }
+    ],
+    content: {
+      dir: "center007", // 内容页目录
+      min: 1,           // 最小 ID
+      max: 84450       // 最大 ID
+    }
+  },
+  
+  
+    {
+    name: "xiaoyangqi.com",
+    home: "https://www.xiaoyangqi.com/",
+    sitemap: "https://www.xiaoyangqi.com/sitemap.xml",
+    categories: [
+      { title: "mybox-t1", url: "https://www.xiaoyangqi.com/mybox/t1.html" },
+      { title: "mybox-t2", url: "https://www.xiaoyangqi.com/mybox/t2.html" },
+      { title: "mybox-t3", url: "https://www.xiaoyangqi.com/mybox/t3.html" },
+      { title: "mybox-t4", url: "https://www.xiaoyangqi.com/mybox/t4.html" }
+    ],
+    content: {
+      dir: "daquan007", // 内容页目录
+      min: 1,           // 最小 ID
+      max: 84450       // 最大 ID
+    }
+  },
+  
+  
+  {
+    name: "fuchengqy.com",
+    home: "https://www.fuchengqy.com/",
+    sitemap: "https://www.fuchengqy.com/sitemap.xml",
+    categories: [
+      { title: "shop-t1", url: "https://www.fuchengqy.com/shop/t1.html" },
+      { title: "shop-t2", url: "https://www.fuchengqy.com/shop/t2.html" },
+      { title: "shop-t3", url: "https://www.fuchengqy.com/shop/t3.html" },
+      { title: "shop-t4", url: "https://www.fuchengqy.com/shop/t4.html" }
+    ],
+    content: {
+      dir: "xviewo", // 内容页目录
+      min: 1,           // 最小 ID
+      max: 84450       // 最大 ID
+    }
+  }, 
+  
+  
+  {
+    name: "zzoyjd.com",
+    home: "https://www.zzoyjd.com/",
+    sitemap: "https://www.zzoyjd.com/sitemap.xml",
+    categories: [
+      { title: "maxzone-t1", url: "https://www.zzoyjd.com/maxzone/t1.html" },
+      { title: "maxzone-t2", url: "https://www.zzoyjd.com/maxzone/t2.html" },
+      { title: "maxzone-t3", url: "https://www.zzoyjd.com/maxzone/t3.html" },
+      { title: "maxzone-t4", url: "https://www.zzoyjd.com/maxzone/t4.html" }
+    ],
+    content: {
+      dir: "minhtml", // 内容页目录
+      min: 1,           // 最小 ID
+      max: 84450       // 最大 ID
+    }
+  }, 
+  
+  
+  {
+    name: "sxxinbao.cn",
+    home: "https://www.sxxinbao.cn/",
+    sitemap: "https://www.sxxinbao.cn/sitemap.xml",
+    categories: [
+      { title: "coolpath-t1", url: "https://www.sxxinbao.cn/coolpath/t1.html" },
+      { title: "coolpath-t2", url: "https://www.sxxinbao.cn/coolpath/t2.html" },
+      { title: "coolpath-t3", url: "https://www.sxxinbao.cn/coolpath/t3.html" },
+      { title: "coolpath-t4", url: "https://www.sxxinbao.cn/coolpath/t4.html" }
+    ],
+    content: {
+      dir: "rawbofang", // 内容页目录
+      min: 1,           // 最小 ID
+      max: 84450       // 最大 ID
+    }
+  }, 
+  
+  
+  
+  {
+    name: "szzxdwl.com",
+    home: "https://www.szzxdwl.com/",
+    sitemap: "https://www.szzxdwl.com/sitemap.xml",
+    categories: [
+      { title: "vipmoviebox-t1", url: "https://www.szzxdwl.com/vipmoviebox/t1.html" },
+      { title: "vipmoviebox-t2", url: "https://www.szzxdwl.com/vipmoviebox/t2.html" },
+      { title: "vipmoviebox-t3", url: "https://www.szzxdwl.com/vipmoviebox/t3.html" },
+      { title: "vipmoviebox-t4", url: "https://www.szzxdwl.com/vipmoviebox/t4.html" }
+    ],
+    content: {
+      dir: "prohomesite", // 内容页目录
+      min: 1,           // 最小 ID
+      max: 84450       // 最大 ID
+    }
+  }, 
+  
+  
+  {
+    name: "rgznaj.com",
+    home: "https://www.rgznaj.com/",
+    sitemap: "https://www.rgznaj.com/sitemap.xml",
+    categories: [
+      { title: "realtv-t1", url: "https://www.rgznaj.com/realtv/t1.html" },
+      { title: "realtv-t2", url: "https://www.rgznaj.com/realtv/t2.html" },
+      { title: "realtv-t3", url: "https://www.rgznaj.com/realtv/t3.html" },
+      { title: "realtv-t4", url: "https://www.rgznaj.com/realtv/t4.html" }
+    ],
+    content: {
+      dir: "playinfo", // 内容页目录
+      min: 1,           // 最小 ID
+      max: 84450       // 最大 ID
+    }
+  },   
 ];
