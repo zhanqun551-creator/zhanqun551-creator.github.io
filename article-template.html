@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- 文章页SEO信息 -->
+    <title>文章标题 - 技术文档库</title>
+    <meta name="description" content="文章描述，简要概括文章内容，约150字左右。">
+    <meta name="keywords" content="关键词1, 关键词2, 关键词3, 关键词4">
+
+    <!-- 结构化数据 -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "TechArticle",
+        "headline": "文章标题",
+        "description": "文章描述",
+        "author": {
+            "@type": "Organization",
+            "name": "技术文档库"
+        },
+        "datePublished": "2025-01-01",
+        "dateModified": "2025-01-01",
+        "publisher": {
+            "@type": "Organization",
+            "name": "技术文档库",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https://docs.example.com/logo.png"
+            }
+        },
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://docs.example.com/post/{id}"
+        }
+    }
+    </script>
+
+    <link rel="stylesheet" href="../style.css">
+    <link rel="canonical" href="https://docs.example.com/post/{id}">
+</head>
+<body>
+    <!-- 网站头部 -->
+    <header class="site-header">
+        <div class="container header-content">
+            <div class="site-logo">
+                <div class="logo-icon">TD</div>
+                <div class="logo-text">技术文档库</div>
+            </div>
+            <nav class="site-nav">
+                <ul>
+                    <li><a href="../index.html">首页</a></li>
+                    <li><a href="../category/project-structure.html">项目结构</a></li>
+                    
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 主内容区 -->
+    <main class="container">
+        <!-- 面包屑导航 -->
+        <nav class="breadcrumb">
+            <ul>
+                <li><a href="../index.html">首页</a></li>
+                <li><a href="../category/project-structure.html">分类名称</a></li>
+                <li class="current">文章标题</li>
+            </ul>
+        </nav>
+
+        <!-- 文章标题 -->
+        <h1>文章标题</h1>
+
+        <!-- 文章元信息 -->
+        <div class="article-meta mb-4">
+            <span>分类：<a href="../category/project-structure.html">分类名称</a></span>
+            <span>发布日期：2025年1月1日</span>
+            <span>阅读时间：约X分钟</span>
+        </div>
+
+        <!-- 文章内容 -->
+        <article class="article-content-full">
+            <p>文章引言段落，简要介绍文章主题、背景和主要内容。这部分应吸引读者继续阅读，明确文章的价值和适用范围。</p>
+
+            
+        </article>
+
+        
+    </main>
+
+    <!-- 网站页脚 -->
+    <footer class="site-footer">
+        <div class="container footer-content">
+            <div class="footer-logo">技术文档库</div>
+            <p class="footer-description">
+                专注于技术文档整理、开发实践经验与实用教程汇总，为开发者提供清晰可靠的参考资料。
+            </p>
+            
+            <div class="copyright">
+                <p>©  技术文档分享与实践指南. 本站内容遵循知识共享协议.</p>
+                
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

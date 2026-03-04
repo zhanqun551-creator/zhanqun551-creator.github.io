@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- 文章页SEO信息 -->
+    <title>API设计规范与版本管理 - 技术文档库</title>
+    <meta name="description" content="本文深入探讨API设计规范与版本管理的关键技术，旨在帮助开发者构建高效、可维护的API系统。文章首先介绍API设计的基本原则，包括RESTful架构、资源命名、HTTP方法使用等核心概念；接着详细阐述版本管理的策略，如URI版本控制、请求头版本控制等实践方法；最后分享最佳实践和优化建议，以提升API的稳定性和扩展性。通过本文，读者将掌握API设计与版本管理的完整知识体系，为实际项目提供有力指导。">
+    <meta name="keywords" content="API设计,版本管理,RESTful,HTTP方法,资源命名,向后兼容,URI版本控制">
+
+    <!-- 结构化数据 -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "TechArticle",
+        "headline": "API设计规范与版本管理",
+        "description": "本文深入探讨API设计规范与版本管理的关键技术，旨在帮助开发者构建高效、可维护的API系统。文章首先介绍API设计的基本原则，包括RESTful架构、资源命名、HTTP方法使用等核心概念；接着详细阐述版本管理的策略，如URI版本控制、请求头版本控制等实践方法；最后分享最佳实践和优化建议，以提升API的稳定性和扩展性。通过本文，读者将掌握API设计与版本管理的完整知识体系，为实际项目提供有力指导。",
+        "author": {
+            "@type": "Organization",
+            "name": "技术文档库"
+        },
+        "datePublished": "2026-03-03",
+        "dateModified": "2026-03-03",
+        "publisher": {
+            "@type": "Organization",
+            "name": "技术文档库",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https://docs.example.com/logo.png"
+            }
+        },
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://docs.example.com/post/20"
+        }
+    }
+    </script>
+
+    <link rel="stylesheet" href="../style.css">
+    <link rel="canonical" href="https://docs.example.com/post/20">
+</head>
+<body>
+    <!-- 网站头部 -->
+    <header class="site-header">
+        <div class="container header-content">
+            <div class="site-logo">
+                <div class="logo-icon">TD</div>
+                <div class="logo-text">技术文档库</div>
+            </div>
+            <nav class="site-nav">
+                <ul>
+                    <li><a href="../index.html">首页</a></li>
+                    <li><a href="../category/project-structure.html">项目结构</a></li>
+                    
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 主内容区 -->
+    <main class="container">
+        <!-- 面包屑导航 -->
+        <nav class="breadcrumb">
+            <ul>
+                <li><a href="../index.html">首页</a></li>
+                <li><a href="../category/project-structure.html">软件开发</a></li>
+                <li class="current">API设计规范与版本管理</li>
+            </ul>
+        </nav>
+
+        <!-- API设计规范与版本管理 -->
+        <h1>API设计规范与版本管理</h1>
+
+        <!-- 文章元信息 -->
+        <div class="article-meta mb-4">
+            <span>分类：<a href="../category/project-structure.html">软件开发</a></span>
+            <span>发布日期：2026年03月03日</span>
+            <span>阅读时间：约5分钟</span>
+        </div>
+
+        <!-- 文章内容 -->
+        <article class="article-content-full">
+            <p><article><h2>引言</h2><p>在当今的软件开发领域，API（应用程序编程接口）已成为系统间通信和数据交换的核心组件。随着微服务架构和云原生技术的普及，API的设计质量直接影响着系统的可维护性、扩展性和用户体验。然而，许多开发者在API设计和版本管理方面面临挑战，如API接口混乱、版本升级导致兼容性问题等。本文旨在通过系统化的方法，帮助开发者掌握API设计规范与版本管理的核心技术，从而构建高效、稳定的API系统。</p><h2>核心概念</h2><p>API设计规范与版本管理涉及多个关键技术概念，理解这些概念是实践的基础。</p><h3>RESTful架构</h3><p>RESTful架构是一种基于HTTP协议的API设计风格，强调资源的表述和状态转移。它通过统一的接口（如GET、POST、PUT、DELETE等HTTP方法）来操作资源，使API设计更加简洁和可预测。RESTful API的核心原则包括无状态性、可缓存性、分层系统和按需代码，这些原则有助于提高系统的可扩展性和性能。</p><h3>资源命名与HTTP方法</h3><p>在API设计中，资源命名应遵循清晰、一致的原则，通常使用名词复数形式表示资源集合（如<code>/users</code>），并使用HTTP方法来定义操作。例如，GET用于获取资源，POST用于创建资源，PUT用于更新资源，DELETE用于删除资源。合理的资源命名和HTTP方法使用，能显著提升API的可读性和易用性。</p><h3>版本管理策略</h3><p>版本管理是API生命周期中的关键环节，用于处理API的变更和升级。常见的版本管理策略包括URI版本控制（如<code>/v1/users</code>）、请求头版本控制（如使用<code>Accept</code>头指定版本）和查询参数版本控制。每种策略都有其优缺点，开发者需根据项目需求选择合适的方法，以确保向后兼容性和平滑升级。</p><h2>实践方法</h2><p>基于核心概念，以下是API设计规范与版本管理的具体实施步骤。</p><h3>API设计步骤</h3><p>首先，明确API的业务需求和目标用户，定义资源模型和操作。其次，设计资源URI，遵循RESTful原则，使用名词和合适的HTTP方法。然后，定义请求和响应格式，通常使用JSON或XML，并确保数据结构的简洁性。最后，编写API文档，使用工具如Swagger或OpenAPI，以提供清晰的接口说明和示例。</p><h3>版本管理实施</h3><p>在版本管理方面，建议采用URI版本控制作为默认策略，因为它简单直观，易于理解和实现。例如，初始版本设为<code>/v1</code>，当需要重大变更时，引入<code>/v2</code>。同时，维护旧版本的兼容性，通过重定向或代理服务支持旧客户端。对于小范围变更，可考虑使用请求头版本控制，以减少URI的复杂性。</p><h3>错误处理与安全</h3><p>API设计应包括完善的错误处理机制，使用标准的HTTP状态码（如400表示客户端错误，500表示服务器错误）和自定义错误消息。安全方面，实施身份验证（如OAuth 2.0）、授权和速率限制，以保护API免受滥用和攻击。定期进行安全审计和测试，确保API的可靠性。</p><h2>最佳实践</h2><p>通过经验总结，以下优化建议能进一步提升API的质量。</p><h3>向后兼容性</h3><p>在API升级时，优先考虑向后兼容性，避免破坏现有客户端。例如，新增字段时设为可选，而非必填；删除字段时先标记为弃用，再在后续版本移除。使用版本管理策略来隔离不兼容的变更，减少用户迁移成本。</p><h3>性能优化</h3><p>优化API性能，包括使用缓存机制（如HTTP缓存头）、分页查询和压缩响应数据。监控API的响应时间和吞吐量，通过负载均衡和自动扩展来应对高并发场景。定期进行性能测试，识别瓶颈并改进。</p><h3>文档与社区支持</h3><p>提供详细的API文档和示例代码，帮助开发者快速上手。建立社区支持渠道，如论坛或Slack频道，收集用户反馈并持续改进API。使用版本发布说明，透明地沟通变更内容，增强用户信任。</p><h2>总结</h2><p>本文系统介绍了API设计规范与版本管理的核心概念、实践方法和最佳实践。通过遵循RESTful原则、合理设计资源和实施版本控制，开发者可以构建高效、可维护的API系统。未来，随着技术发展，API设计可能更加智能化，如基于GraphQL的动态查询，但核心规范仍将保持重要性。建议读者在实际项目中应用这些知识，并结合具体场景灵活调整，以提升软件开发的整体质量。</p></article>
+参考：<br>
+www.zhushus.cn/voddetail/50233.html<br>
+www.zhushus.cn/voddetail/18227.html<br>
+www.zhushus.cn/voddetail/158323.html<br>
+www.zhushus.cn/voddetail/74485.html<br>
+www.zhushus.cn/voddetail/137819.html<br>
+www.zhushus.cn/voddetail/10798.html<br>
+www.zhushus.cn/voddetail/82272.html<br>
+www.zhushus.cn/voddetail/60822.html<br>
+www.zhushus.cn/voddetail/179446.html<br>
+www.zhushus.cn/voddetail/158471.html<br>
+www.zhushus.cn/voddetail/72421.html<br>
+www.zhushus.cn/voddetail/30710.html<br>
+www.zhushus.cn/voddetail/183716.html<br>
+www.zhushus.cn/voddetail/129397.html<br>
+www.zhushus.cn/voddetail/53358.html<br>
+www.zhushus.cn/voddetail/72066.html<br>
+www.zhushus.cn/voddetail/169857.html<br>
+www.zhushus.cn/voddetail/55100.html<br>
+www.zhushus.cn/voddetail/82351.html<br>
+www.zhushus.cn/voddetail/9487.html<br>
+www.zhushus.cn/voddetail/74135.html<br>
+www.zhushus.cn/voddetail/55515.html<br>
+www.zhushus.cn/voddetail/40473.html<br>
+www.zhushus.cn/voddetail/150618.html<br>
+www.zhushus.cn/voddetail/164790.html<br>
+www.zhushus.cn/voddetail/102985.html<br>
+www.zhushus.cn/voddetail/145057.html<br>
+www.zhushus.cn/voddetail/136117.html<br>
+www.zhushus.cn/voddetail/47387.html<br>
+www.zhushus.cn/voddetail/1600.html<br>
+www.zhushus.cn/voddetail/66606.html<br>
+www.zhushus.cn/voddetail/29924.html<br>
+www.zhushus.cn/voddetail/25378.html<br>
+www.zhushus.cn/voddetail/14352.html<br>
+www.zhushus.cn/voddetail/132216.html<br>
+www.zhushus.cn/voddetail/136804.html<br>
+www.zhushus.cn/voddetail/97366.html<br>
+www.zhushus.cn/voddetail/174232.html<br>
+www.zhushus.cn/voddetail/99055.html<br>
+www.zhushus.cn/voddetail/701.html<br>
+www.zhushus.cn/voddetail/120370.html<br>
+www.zhushus.cn/voddetail/161721.html<br>
+www.zhushus.cn/voddetail/78392.html<br>
+www.zhushus.cn/voddetail/105269.html<br>
+www.zhushus.cn/voddetail/88421.html<br>
+www.zhushus.cn/voddetail/110878.html<br>
+www.zhushus.cn/voddetail/36232.html<br>
+www.zhushus.cn/voddetail/126884.html<br>
+www.zhushus.cn/voddetail/165265.html<br>
+www.zhushus.cn/voddetail/102559.html<br>
+www.zhushus.cn/voddetail/135041.html<br>
+www.zhushus.cn/voddetail/141604.html<br>
+www.zhushus.cn/voddetail/27377.html<br>
+www.zhushus.cn/voddetail/161825.html<br>
+www.zhushus.cn/voddetail/12282.html<br>
+www.zhushus.cn/voddetail/27105.html<br>
+www.zhushus.cn/voddetail/135161.html<br>
+www.zhushus.cn/voddetail/22559.html<br>
+www.zhushus.cn/voddetail/36092.html<br>
+www.zhushus.cn/voddetail/123925.html<br>
+www.zhushus.cn/voddetail/112026.html<br>
+www.zhushus.cn/voddetail/19100.html<br>
+www.zhushus.cn/voddetail/151160.html<br>
+www.zhushus.cn/voddetail/26197.html<br>
+www.zhushus.cn/voddetail/99084.html<br>
+www.zhushus.cn/voddetail/45772.html<br>
+www.zhushus.cn/voddetail/64202.html<br>
+www.zhushus.cn/voddetail/14100.html<br>
+www.zhushus.cn/voddetail/24653.html<br>
+www.zhushus.cn/voddetail/144832.html<br>
+www.zhushus.cn/voddetail/74447.html<br>
+www.zhushus.cn/voddetail/160263.html<br>
+www.zhushus.cn/voddetail/101363.html<br>
+www.zhushus.cn/voddetail/139543.html<br>
+www.zhushus.cn/voddetail/99513.html<br>
+www.zhushus.cn/voddetail/114182.html<br>
+www.zhushus.cn/voddetail/119.html<br>
+www.zhushus.cn/voddetail/28064.html<br>
+www.zhushus.cn/voddetail/166452.html<br>
+www.zhushus.cn/voddetail/39973.html<br>
+www.zhushus.cn/voddetail/178922.html<br>
+www.zhushus.cn/voddetail/68717.html<br>
+www.zhushus.cn/voddetail/122916.html<br>
+www.zhushus.cn/voddetail/29016.html<br>
+www.zhushus.cn/voddetail/8205.html<br>
+www.zhushus.cn/voddetail/63777.html<br>
+www.zhushus.cn/voddetail/52384.html<br>
+www.zhushus.cn/voddetail/63421.html<br>
+www.zhushus.cn/voddetail/26101.html<br>
+www.zhushus.cn/voddetail/182978.html<br>
+www.zhushus.cn/voddetail/171727.html<br>
+www.zhushus.cn/voddetail/58007.html<br>
+www.zhushus.cn/voddetail/94041.html<br>
+www.zhushus.cn/voddetail/159818.html<br>
+www.zhushus.cn/voddetail/169113.html<br>
+www.zhushus.cn/voddetail/149308.html<br>
+www.zhushus.cn/voddetail/58798.html<br>
+www.zhushus.cn/voddetail/53844.html<br>
+www.zhushus.cn/voddetail/123860.html<br>
+www.zhushus.cn/voddetail/58501.html<br>
+www.zhushus.cn/voddetail/124322.html<br>
+www.zhushus.cn/voddetail/11246.html<br>
+www.zhushus.cn/voddetail/9478.html<br>
+www.zhushus.cn/voddetail/26712.html<br>
+www.zhushus.cn/voddetail/15588.html<br>
+www.zhushus.cn/voddetail/39233.html<br>
+www.zhushus.cn/voddetail/168949.html<br>
+www.zhushus.cn/voddetail/182504.html<br>
+www.zhushus.cn/voddetail/151572.html<br>
+www.zhushus.cn/voddetail/46083.html<br>
+www.zhushus.cn/voddetail/126735.html<br>
+www.zhushus.cn/voddetail/30869.html<br>
+www.zhushus.cn/voddetail/40514.html<br>
+www.zhushus.cn/voddetail/168162.html<br>
+www.zhushus.cn/voddetail/169781.html<br>
+www.zhushus.cn/voddetail/49362.html<br>
+www.zhushus.cn/voddetail/165446.html<br>
+www.zhushus.cn/voddetail/36198.html<br>
+www.zhushus.cn/voddetail/158371.html<br>
+www.zhushus.cn/voddetail/88166.html<br>
+www.zhushus.cn/voddetail/142079.html<br>
+www.zhushus.cn/voddetail/139610.html<br>
+www.zhushus.cn/voddetail/121458.html<br>
+www.zhushus.cn/voddetail/120707.html<br>
+www.zhushus.cn/voddetail/73580.html<br>
+www.zhushus.cn/voddetail/112421.html<br>
+www.zhushus.cn/voddetail/185917.html<br>
+www.zhushus.cn/voddetail/105198.html<br>
+www.zhushus.cn/voddetail/28824.html<br>
+www.zhushus.cn/voddetail/4725.html<br>
+www.zhushus.cn/voddetail/150049.html<br>
+www.zhushus.cn/voddetail/178014.html<br>
+www.zhushus.cn/voddetail/40790.html<br>
+www.zhushus.cn/voddetail/97903.html<br>
+www.zhushus.cn/voddetail/153425.html<br>
+www.zhushus.cn/voddetail/129535.html<br>
+www.zhushus.cn/voddetail/128485.html<br>
+www.zhushus.cn/voddetail/17603.html<br>
+www.zhushus.cn/voddetail/877.html<br>
+www.zhushus.cn/voddetail/169715.html<br>
+www.zhushus.cn/voddetail/181577.html<br>
+www.zhushus.cn/voddetail/94855.html<br>
+www.zhushus.cn/voddetail/101428.html<br>
+www.zhushus.cn/voddetail/173812.html<br>
+www.zhushus.cn/voddetail/11567.html<br>
+www.zhushus.cn/voddetail/104323.html<br>
+www.zhushus.cn/voddetail/167949.html<br>
+www.zhushus.cn/voddetail/186448.html<br>
+www.zhushus.cn/voddetail/64648.html<br>
+www.zhushus.cn/voddetail/39488.html<br>
+www.zhushus.cn/voddetail/73237.html<br>
+www.zhushus.cn/voddetail/69187.html<br>
+www.zhushus.cn/voddetail/144664.html<br>
+www.zhushus.cn/voddetail/116582.html<br>
+www.zhushus.cn/voddetail/160438.html<br>
+www.zhushus.cn/voddetail/37869.html<br>
+www.zhushus.cn/voddetail/131098.html<br>
+www.zhushus.cn/voddetail/178999.html<br>
+www.zhushus.cn/voddetail/27830.html<br>
+www.zhushus.cn/voddetail/107732.html<br>
+www.zhushus.cn/voddetail/136284.html<br>
+www.zhushus.cn/voddetail/69899.html<br>
+www.zhushus.cn/voddetail/151708.html<br>
+www.zhushus.cn/voddetail/186110.html<br>
+www.zhushus.cn/voddetail/112782.html<br>
+www.zhushus.cn/voddetail/171896.html<br>
+www.zhushus.cn/voddetail/36212.html<br>
+www.zhushus.cn/voddetail/169380.html<br>
+www.zhushus.cn/voddetail/43870.html<br>
+www.zhushus.cn/voddetail/148995.html<br>
+www.zhushus.cn/voddetail/37828.html<br>
+www.zhushus.cn/voddetail/35869.html<br>
+www.zhushus.cn/voddetail/53272.html<br>
+www.zhushus.cn/voddetail/186338.html<br>
+www.zhushus.cn/voddetail/47678.html<br>
+www.zhushus.cn/voddetail/93903.html<br>
+www.zhushus.cn/voddetail/42811.html<br>
+www.zhushus.cn/voddetail/21919.html<br>
+www.zhushus.cn/voddetail/169914.html<br>
+www.zhushus.cn/voddetail/1235.html<br>
+www.zhushus.cn/voddetail/68850.html<br>
+www.zhushus.cn/voddetail/63008.html<br>
+www.zhushus.cn/voddetail/57795.html<br>
+www.zhushus.cn/voddetail/184230.html<br>
+www.zhushus.cn/voddetail/113878.html<br>
+www.zhushus.cn/voddetail/42247.html<br>
+www.zhushus.cn/voddetail/117267.html<br>
+www.zhushus.cn/voddetail/15041.html<br>
+www.zhushus.cn/voddetail/30932.html<br>
+www.zhushus.cn/voddetail/120675.html<br>
+www.zhushus.cn/voddetail/54520.html<br>
+www.zhushus.cn/voddetail/160334.html<br>
+www.zhushus.cn/voddetail/58225.html<br>
+www.zhushus.cn/voddetail/151133.html<br>
+www.zhushus.cn/voddetail/36473.html<br>
+www.zhushus.cn/voddetail/60012.html<br>
+www.zhushus.cn/voddetail/76125.html<br>
+www.zhushus.cn/voddetail/148344.html<br>
+www.zhushus.cn/voddetail/76904.html<br>
+www.zhushus.cn/voddetail/178361.html<br>
+www.zhushus.cn/voddetail/26081.html<br>
+www.zhushus.cn/voddetail/165788.html<br>
+www.zhushus.cn/voddetail/149713.html<br>
+www.zhushus.cn/voddetail/106025.html<br>
+www.zhushus.cn/voddetail/133577.html<br>
+www.zhushus.cn/voddetail/19554.html<br>
+www.zhushus.cn/voddetail/154828.html<br>
+www.zhushus.cn/voddetail/102495.html<br>
+www.zhushus.cn/voddetail/36772.html<br>
+www.zhushus.cn/voddetail/156452.html<br>
+www.zhushus.cn/voddetail/125425.html<br>
+www.zhushus.cn/voddetail/125413.html<br>
+www.zhushus.cn/voddetail/4329.html<br>
+www.zhushus.cn/voddetail/17797.html<br>
+www.zhushus.cn/voddetail/153399.html<br>
+www.zhushus.cn/voddetail/170376.html<br>
+www.zhushus.cn/voddetail/74379.html<br>
+www.zhushus.cn/voddetail/73222.html<br>
+www.zhushus.cn/voddetail/2988.html<br>
+www.zhushus.cn/voddetail/144042.html<br>
+www.zhushus.cn/voddetail/40038.html<br>
+www.zhushus.cn/voddetail/148218.html<br>
+www.zhushus.cn/voddetail/80478.html<br>
+www.zhushus.cn/voddetail/40238.html<br>
+www.zhushus.cn/voddetail/87746.html<br>
+www.zhushus.cn/voddetail/9799.html<br>
+www.zhushus.cn/voddetail/1908.html<br>
+www.zhushus.cn/voddetail/146619.html<br>
+www.zhushus.cn/voddetail/110523.html<br>
+www.zhushus.cn/voddetail/20871.html<br>
+www.zhushus.cn/voddetail/31013.html<br>
+www.zhushus.cn/voddetail/16225.html<br>
+www.zhushus.cn/voddetail/51996.html<br>
+www.zhushus.cn/voddetail/184840.html<br>
+www.zhushus.cn/voddetail/116467.html<br>
+www.zhushus.cn/voddetail/167586.html<br>
+www.zhushus.cn/voddetail/30753.html<br>
+www.zhushus.cn/voddetail/100214.html<br>
+www.zhushus.cn/voddetail/142624.html<br>
+www.zhushus.cn/voddetail/100901.html<br>
+www.zhushus.cn/voddetail/94048.html<br>
+www.zhushus.cn/voddetail/131266.html<br>
+www.zhushus.cn/voddetail/20681.html<br>
+www.zhushus.cn/voddetail/77432.html<br>
+www.zhushus.cn/voddetail/108148.html<br>
+www.zhushus.cn/voddetail/149205.html<br>
+www.zhushus.cn/voddetail/114415.html<br>
+www.zhushus.cn/voddetail/60886.html<br>
+www.zhushus.cn/voddetail/179393.html<br>
+www.zhushus.cn/voddetail/80631.html<br>
+www.zhushus.cn/voddetail/167411.html<br>
+www.zhushus.cn/voddetail/99378.html<br>
+www.zhushus.cn/voddetail/139952.html<br>
+www.zhushus.cn/voddetail/147352.html<br>
+www.zhushus.cn/voddetail/57887.html<br>
+www.zhushus.cn/voddetail/80142.html<br>
+www.zhushus.cn/voddetail/51971.html<br>
+www.zhushus.cn/voddetail/51165.html<br>
+www.zhushus.cn/voddetail/149539.html<br>
+www.zhushus.cn/voddetail/45306.html<br>
+www.zhushus.cn/voddetail/150790.html<br>
+www.zhushus.cn/voddetail/77817.html<br>
+www.zhushus.cn/voddetail/94352.html<br>
+www.zhushus.cn/voddetail/128950.html<br>
+www.zhushus.cn/voddetail/146801.html<br>
+www.zhushus.cn/voddetail/125381.html<br>
+www.zhushus.cn/voddetail/168983.html<br>
+www.zhushus.cn/voddetail/14774.html<br>
+www.zhushus.cn/voddetail/47650.html<br>
+www.zhushus.cn/voddetail/14915.html<br>
+www.zhushus.cn/voddetail/9075.html<br>
+www.zhushus.cn/voddetail/172118.html<br>
+www.zhushus.cn/voddetail/31936.html<br>
+www.zhushus.cn/voddetail/179964.html<br>
+www.zhushus.cn/voddetail/21811.html<br>
+www.zhushus.cn/voddetail/72186.html<br>
+www.zhushus.cn/voddetail/146561.html<br>
+www.zhushus.cn/voddetail/28831.html<br>
+www.zhushus.cn/voddetail/72549.html<br>
+www.zhushus.cn/voddetail/92242.html<br>
+www.zhushus.cn/voddetail/170796.html<br>
+www.zhushus.cn/voddetail/40407.html<br>
+www.zhushus.cn/voddetail/87671.html<br>
+www.zhushus.cn/voddetail/126308.html<br>
+www.zhushus.cn/voddetail/120112.html<br>
+www.zhushus.cn/voddetail/119380.html<br>
+www.zhushus.cn/voddetail/39090.html<br>
+www.zhushus.cn/voddetail/19959.html<br>
+www.zhushus.cn/voddetail/67788.html<br>
+www.zhushus.cn/voddetail/65707.html<br>
+www.zhushus.cn/voddetail/5290.html<br>
+www.zhushus.cn/voddetail/146282.html<br>
+www.zhushus.cn/voddetail/151560.html<br>
+www.zhushus.cn/voddetail/59809.html<br>
+www.zhushus.cn/voddetail/141470.html<br>
+www.zhushus.cn/voddetail/40664.html<br>
+www.zhushus.cn/voddetail/167454.html<br>
+www.zhushus.cn/voddetail/97487.html<br>
+www.zhushus.cn/voddetail/161239.html<br>
+www.zhushus.cn/voddetail/131193.html<br>
+</p>
+
+            
+        </article>
+
+        
+    </main>
+
+    <!-- 网站页脚 -->
+    <footer class="site-footer">
+        <div class="container footer-content">
+            <div class="footer-logo">技术文档库</div>
+            <p class="footer-description">
+                专注于技术文档整理、开发实践经验与实用教程汇总，为开发者提供清晰可靠的参考资料。
+            </p>
+            
+            <div class="copyright">
+                <p>©  技术文档分享与实践指南. 本站内容遵循知识共享协议.</p>
+                
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

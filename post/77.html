@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- 文章页SEO信息 -->
+    <title>分布式系统设计原理 - 技术文档库</title>
+    <meta name="description" content="本文深入探讨分布式系统设计原理，涵盖核心概念如一致性、容错性和可扩展性，并提供实践方法和最佳实践。通过分析CAP定理、共识算法等关键技术，帮助开发者构建高可用、高性能的分布式系统，适用于云计算、大数据等场景，具有重要的技术指导价值。">
+    <meta name="keywords" content="分布式系统, 一致性, 容错性, 可扩展性, CAP定理, 共识算法, 微服务架构">
+
+    <!-- 结构化数据 -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "TechArticle",
+        "headline": "分布式系统设计原理",
+        "description": "本文深入探讨分布式系统设计原理，涵盖核心概念如一致性、容错性和可扩展性，并提供实践方法和最佳实践。通过分析CAP定理、共识算法等关键技术，帮助开发者构建高可用、高性能的分布式系统，适用于云计算、大数据等场景，具有重要的技术指导价值。",
+        "author": {
+            "@type": "Organization",
+            "name": "技术文档库"
+        },
+        "datePublished": "2026-03-03",
+        "dateModified": "2026-03-03",
+        "publisher": {
+            "@type": "Organization",
+            "name": "技术文档库",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https://docs.example.com/logo.png"
+            }
+        },
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://docs.example.com/post/77"
+        }
+    }
+    </script>
+
+    <link rel="stylesheet" href="../style.css">
+    <link rel="canonical" href="https://docs.example.com/post/77">
+</head>
+<body>
+    <!-- 网站头部 -->
+    <header class="site-header">
+        <div class="container header-content">
+            <div class="site-logo">
+                <div class="logo-icon">TD</div>
+                <div class="logo-text">技术文档库</div>
+            </div>
+            <nav class="site-nav">
+                <ul>
+                    <li><a href="../index.html">首页</a></li>
+                    <li><a href="../category/project-structure.html">项目结构</a></li>
+                    
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 主内容区 -->
+    <main class="container">
+        <!-- 面包屑导航 -->
+        <nav class="breadcrumb">
+            <ul>
+                <li><a href="../index.html">首页</a></li>
+                <li><a href="../category/project-structure.html">系统架构</a></li>
+                <li class="current">分布式系统设计原理</li>
+            </ul>
+        </nav>
+
+        <!-- 分布式系统设计原理 -->
+        <h1>分布式系统设计原理</h1>
+
+        <!-- 文章元信息 -->
+        <div class="article-meta mb-4">
+            <span>分类：<a href="../category/project-structure.html">系统架构</a></span>
+            <span>发布日期：2026年03月03日</span>
+            <span>阅读时间：约5分钟</span>
+        </div>
+
+        <!-- 文章内容 -->
+        <article class="article-content-full">
+            <p><article>
+<h2>引言</h2>
+<p>随着互联网技术的飞速发展，单机系统已难以满足现代应用对高并发、高可用和大数据处理的需求。分布式系统应运而生，它通过将计算任务分散到多台计算机上协同工作，以提升系统性能和可靠性。然而，分布式系统的设计面临诸多挑战，如网络延迟、节点故障和数据一致性等问题。本文旨在系统性地介绍分布式系统设计原理，帮助开发者理解关键技术概念，掌握实践方法，并分享最佳实践，从而构建稳健的分布式架构。</p>
+<h2>核心概念</h2>
+<p>分布式系统的核心概念是理解其设计原理的基础。这些概念包括一致性、容错性和可扩展性等，它们共同决定了系统的行为和性能。</p>
+<h3>一致性模型</h3>
+<p>一致性是分布式系统中数据复制的关键问题，指的是多个节点上的数据副本在更新后保持一致的状态。常见的一致性模型包括强一致性、弱一致性和最终一致性。强一致性要求所有节点在更新后立即看到相同的数据，但可能影响性能；弱一致性允许短暂的不一致，提高可用性；最终一致性则保证在没有新更新的情况下，所有节点最终会达到一致状态。例如，在分布式数据库中，强一致性适用于金融交易场景，而最终一致性常用于社交网络等容忍延迟的应用。</p>
+<h3>容错性机制</h3>
+<p>容错性是指系统在部分组件（如节点或网络）发生故障时，仍能继续正常运行的能力。分布式系统通过冗余设计、故障检测和恢复机制来实现容错。例如，使用副本技术将数据复制到多个节点，当主节点故障时，备用节点可以接管服务。此外，共识算法如Paxos和Raft确保在节点故障时系统仍能达成一致决策，提高系统的鲁棒性。</p>
+<h3>可扩展性策略</h3>
+<p>可扩展性是指系统能够通过增加资源（如节点）来应对负载增长的能力。分布式系统通常采用水平扩展（增加更多节点）和垂直扩展（升级单个节点硬件）两种策略。水平扩展更灵活，适用于大规模部署，但需要解决数据分片和负载均衡问题。例如，在微服务架构中，每个服务可以独立扩展，通过负载均衡器分发请求，以提升整体吞吐量。</p>
+<h2>实践方法</h2>
+<p>设计分布式系统时，需要遵循具体的方法和步骤，以确保系统的高效和可靠。本节将介绍从架构选择到实施的关键实践方法。</p>
+<h3>架构设计步骤</h3>
+<p>分布式系统的架构设计通常包括以下步骤：首先，明确系统需求，如性能指标、可用性目标和数据规模；其次，选择适合的架构模式，如客户端-服务器、对等网络或微服务；然后，设计数据存储方案，考虑使用分布式数据库或NoSQL存储；接着，实现通信机制，如RPC或消息队列；最后，集成监控和日志系统，以便实时跟踪系统状态。例如，一个电商平台可能采用微服务架构，将用户管理、订单处理和库存服务分离，通过API网关协调通信。</p>
+<h3>技术选型指南</h3>
+<p>在技术选型时，需评估不同工具和框架的适用性。对于数据存储，可以根据一致性需求选择关系型数据库（如MySQL集群）或NoSQL数据库（如Cassandra）；对于消息传递，Kafka或RabbitMQ可用于异步通信；对于服务发现，Consul或etcd提供节点注册和发现功能。此外，容器化技术如Docker和编排工具如Kubernetes简化了部署和管理。建议根据项目规模、团队经验和社区支持进行选择，例如，小型团队可能从简单的REST API和Redis缓存开始，逐步引入更复杂的组件。</p>
+<h2>最佳实践</h2>
+<p>基于行业经验，以下最佳实践可以帮助优化分布式系统的设计和运维，避免常见陷阱。</p>
+<h3>经验教训分享</h3>
+<p>在分布式系统开发中，常见的教训包括过度设计、忽视网络分区和低估监控重要性。例如，过早引入复杂的一致性模型可能导致性能瓶颈；网络分区（如CAP定理中的分区容忍性）必须被考虑，系统应在一致性和可用性之间做出权衡。建议从简单设计开始，逐步迭代，并使用混沌工程工具如Chaos Monkey测试系统容错性。此外，建立全面的监控和告警系统，能快速定位故障，减少停机时间。</p>
+<h3>优化建议</h3>
+<p>为了提升分布式系统性能，可以采取以下优化措施：使用缓存减少数据库负载，如Redis存储热点数据；实施数据分片将负载分散到多个节点；采用异步处理提高响应速度，例如将耗时任务放入消息队列；优化网络通信，使用压缩和批处理减少延迟。同时，定期进行性能测试和容量规划，确保系统能应对未来增长。例如，通过A/B测试和负载测试，验证系统在高并发下的稳定性。</p>
+<h2>总结</h2>
+<p>分布式系统设计原理涉及一致性、容错性和可扩展性等核心概念，通过实践方法和最佳实践，开发者可以构建高效、可靠的系统。未来，随着边缘计算和人工智能的发展，分布式系统将更加智能和自适应，例如，结合机器学习优化资源调度。掌握这些原理，有助于应对日益复杂的应用场景，推动技术创新。</p>
+</article>
+参考：<br>
+www.zs87.cn/voddetail/53808.html<br>
+www.zs87.cn/voddetail/49784.html<br>
+www.zs87.cn/voddetail/83836.html<br>
+www.zs87.cn/voddetail/24866.html<br>
+www.zs87.cn/voddetail/102890.html<br>
+www.zs87.cn/voddetail/146412.html<br>
+www.zs87.cn/voddetail/118863.html<br>
+www.zs87.cn/voddetail/162267.html<br>
+www.zs87.cn/voddetail/49884.html<br>
+www.zs87.cn/voddetail/181588.html<br>
+www.zs87.cn/voddetail/107888.html<br>
+www.zs87.cn/voddetail/47411.html<br>
+www.zs87.cn/voddetail/118340.html<br>
+www.zs87.cn/voddetail/129020.html<br>
+www.zs87.cn/voddetail/141589.html<br>
+www.zs87.cn/voddetail/161857.html<br>
+www.zs87.cn/voddetail/14956.html<br>
+www.zs87.cn/voddetail/15958.html<br>
+www.zs87.cn/voddetail/2687.html<br>
+www.zs87.cn/voddetail/96138.html<br>
+www.zs87.cn/voddetail/106496.html<br>
+www.zs87.cn/voddetail/99848.html<br>
+www.zs87.cn/voddetail/160091.html<br>
+www.zs87.cn/voddetail/76402.html<br>
+www.zs87.cn/voddetail/139158.html<br>
+www.zs87.cn/voddetail/185730.html<br>
+www.zs87.cn/voddetail/175002.html<br>
+www.zs87.cn/voddetail/103953.html<br>
+www.zs87.cn/voddetail/121430.html<br>
+www.zs87.cn/voddetail/67812.html<br>
+www.zs87.cn/voddetail/156965.html<br>
+www.zs87.cn/voddetail/119087.html<br>
+www.zs87.cn/voddetail/14871.html<br>
+www.zs87.cn/voddetail/62021.html<br>
+www.zs87.cn/voddetail/56505.html<br>
+www.zs87.cn/voddetail/115015.html<br>
+www.zs87.cn/voddetail/53079.html<br>
+www.zs87.cn/voddetail/138267.html<br>
+www.zs87.cn/voddetail/104112.html<br>
+www.zs87.cn/voddetail/30373.html<br>
+www.zs87.cn/voddetail/165995.html<br>
+www.zs87.cn/voddetail/156527.html<br>
+www.zs87.cn/voddetail/90217.html<br>
+www.zs87.cn/voddetail/106593.html<br>
+www.zs87.cn/voddetail/93772.html<br>
+www.zs87.cn/voddetail/134402.html<br>
+www.zs87.cn/voddetail/16028.html<br>
+www.zs87.cn/voddetail/147034.html<br>
+www.zs87.cn/voddetail/66609.html<br>
+www.zs87.cn/voddetail/11774.html<br>
+www.zs87.cn/voddetail/169719.html<br>
+www.zs87.cn/voddetail/167370.html<br>
+www.zs87.cn/voddetail/73087.html<br>
+www.zs87.cn/voddetail/31543.html<br>
+www.zs87.cn/voddetail/134617.html<br>
+www.zs87.cn/voddetail/128079.html<br>
+www.zs87.cn/voddetail/42759.html<br>
+www.zs87.cn/voddetail/128458.html<br>
+www.zs87.cn/voddetail/114923.html<br>
+www.zs87.cn/voddetail/105365.html<br>
+www.zs87.cn/voddetail/99137.html<br>
+www.zs87.cn/voddetail/184195.html<br>
+www.zs87.cn/voddetail/50701.html<br>
+www.zs87.cn/voddetail/62760.html<br>
+www.zs87.cn/voddetail/162350.html<br>
+www.zs87.cn/voddetail/21123.html<br>
+www.zs87.cn/voddetail/22345.html<br>
+www.zs87.cn/voddetail/82817.html<br>
+www.zs87.cn/voddetail/173046.html<br>
+www.zs87.cn/voddetail/109180.html<br>
+www.zs87.cn/voddetail/163106.html<br>
+www.zs87.cn/voddetail/24613.html<br>
+www.zs87.cn/voddetail/186394.html<br>
+www.zs87.cn/voddetail/78185.html<br>
+www.zs87.cn/voddetail/147572.html<br>
+www.zs87.cn/voddetail/27575.html<br>
+www.zs87.cn/voddetail/178874.html<br>
+www.zs87.cn/voddetail/46175.html<br>
+www.zs87.cn/voddetail/166609.html<br>
+www.zs87.cn/voddetail/61531.html<br>
+www.zs87.cn/voddetail/79431.html<br>
+www.zs87.cn/voddetail/12329.html<br>
+www.zs87.cn/voddetail/73235.html<br>
+www.zs87.cn/voddetail/150968.html<br>
+www.zs87.cn/voddetail/140007.html<br>
+www.zs87.cn/voddetail/133495.html<br>
+www.zs87.cn/voddetail/37671.html<br>
+www.zs87.cn/voddetail/57568.html<br>
+www.zs87.cn/voddetail/109963.html<br>
+www.zs87.cn/voddetail/143779.html<br>
+www.zs87.cn/voddetail/106395.html<br>
+www.zs87.cn/voddetail/113192.html<br>
+www.zs87.cn/voddetail/149968.html<br>
+www.zs87.cn/voddetail/3758.html<br>
+www.zs87.cn/voddetail/56054.html<br>
+www.zs87.cn/voddetail/102176.html<br>
+www.zs87.cn/voddetail/35102.html<br>
+www.zs87.cn/voddetail/16556.html<br>
+www.zs87.cn/voddetail/82614.html<br>
+www.zs87.cn/voddetail/55396.html<br>
+www.zs87.cn/voddetail/131135.html<br>
+www.zs87.cn/voddetail/152668.html<br>
+www.zs87.cn/voddetail/113122.html<br>
+www.zs87.cn/voddetail/91449.html<br>
+www.zs87.cn/voddetail/176450.html<br>
+www.zs87.cn/voddetail/9284.html<br>
+www.zs87.cn/voddetail/46986.html<br>
+www.zs87.cn/voddetail/114709.html<br>
+www.zs87.cn/voddetail/137012.html<br>
+www.zs87.cn/voddetail/140703.html<br>
+www.zs87.cn/voddetail/22619.html<br>
+www.zs87.cn/voddetail/166717.html<br>
+www.zs87.cn/voddetail/87511.html<br>
+www.zs87.cn/voddetail/160215.html<br>
+www.zs87.cn/voddetail/94123.html<br>
+www.zs87.cn/voddetail/133818.html<br>
+www.zs87.cn/voddetail/69561.html<br>
+www.zs87.cn/voddetail/86979.html<br>
+www.zs87.cn/voddetail/171276.html<br>
+www.zs87.cn/voddetail/136364.html<br>
+www.zs87.cn/voddetail/86168.html<br>
+www.zs87.cn/voddetail/69355.html<br>
+www.zs87.cn/voddetail/156985.html<br>
+www.zs87.cn/voddetail/105213.html<br>
+www.zs87.cn/voddetail/116435.html<br>
+www.zs87.cn/voddetail/10866.html<br>
+www.zs87.cn/voddetail/144398.html<br>
+www.zs87.cn/voddetail/139395.html<br>
+www.zs87.cn/voddetail/49158.html<br>
+www.zs87.cn/voddetail/146918.html<br>
+www.zs87.cn/voddetail/157990.html<br>
+www.zs87.cn/voddetail/101276.html<br>
+www.zs87.cn/voddetail/57455.html<br>
+www.zs87.cn/voddetail/73923.html<br>
+www.zs87.cn/voddetail/27190.html<br>
+www.zs87.cn/voddetail/68544.html<br>
+www.zs87.cn/voddetail/40534.html<br>
+www.zs87.cn/voddetail/162375.html<br>
+www.zs87.cn/voddetail/106766.html<br>
+www.zs87.cn/voddetail/42807.html<br>
+www.zs87.cn/voddetail/76486.html<br>
+www.zs87.cn/voddetail/152949.html<br>
+www.zs87.cn/voddetail/46348.html<br>
+www.zs87.cn/voddetail/112225.html<br>
+www.zs87.cn/voddetail/97099.html<br>
+www.zs87.cn/voddetail/174619.html<br>
+www.zs87.cn/voddetail/24155.html<br>
+www.zs87.cn/voddetail/136498.html<br>
+www.zs87.cn/voddetail/111365.html<br>
+www.zs87.cn/voddetail/149232.html<br>
+www.zs87.cn/voddetail/119260.html<br>
+www.zs87.cn/voddetail/74632.html<br>
+www.zs87.cn/voddetail/65593.html<br>
+www.zs87.cn/voddetail/24556.html<br>
+www.zs87.cn/voddetail/94765.html<br>
+www.zs87.cn/voddetail/108463.html<br>
+www.zs87.cn/voddetail/70273.html<br>
+www.zs87.cn/voddetail/163387.html<br>
+www.zs87.cn/voddetail/19909.html<br>
+www.zs87.cn/voddetail/123253.html<br>
+www.zs87.cn/voddetail/102084.html<br>
+www.zs87.cn/voddetail/48045.html<br>
+www.zs87.cn/voddetail/156157.html<br>
+www.zs87.cn/voddetail/80925.html<br>
+www.zs87.cn/voddetail/42571.html<br>
+www.zs87.cn/voddetail/141212.html<br>
+www.zs87.cn/voddetail/131174.html<br>
+www.zs87.cn/voddetail/119960.html<br>
+www.zs87.cn/voddetail/84796.html<br>
+www.zs87.cn/voddetail/45383.html<br>
+www.zs87.cn/voddetail/4738.html<br>
+www.zs87.cn/voddetail/28355.html<br>
+www.zs87.cn/voddetail/183495.html<br>
+www.zs87.cn/voddetail/109093.html<br>
+www.zs87.cn/voddetail/68891.html<br>
+www.zs87.cn/voddetail/145902.html<br>
+www.zs87.cn/voddetail/104554.html<br>
+www.zs87.cn/voddetail/30778.html<br>
+www.zs87.cn/voddetail/118038.html<br>
+www.zs87.cn/voddetail/172339.html<br>
+www.zs87.cn/voddetail/111641.html<br>
+www.zs87.cn/voddetail/110732.html<br>
+www.zs87.cn/voddetail/120100.html<br>
+www.zs87.cn/voddetail/185578.html<br>
+www.zs87.cn/voddetail/38576.html<br>
+www.zs87.cn/voddetail/114012.html<br>
+www.zs87.cn/voddetail/15982.html<br>
+www.zs87.cn/voddetail/109682.html<br>
+www.zs87.cn/voddetail/117118.html<br>
+www.zs87.cn/voddetail/54371.html<br>
+www.zs87.cn/voddetail/57872.html<br>
+www.zs87.cn/voddetail/81288.html<br>
+www.zs87.cn/voddetail/5576.html<br>
+www.zs87.cn/voddetail/76010.html<br>
+www.zs87.cn/voddetail/73976.html<br>
+www.zs87.cn/voddetail/148558.html<br>
+www.zs87.cn/voddetail/23743.html<br>
+www.zs87.cn/voddetail/7326.html<br>
+www.zs87.cn/voddetail/162461.html<br>
+www.zs87.cn/voddetail/105084.html<br>
+www.zs87.cn/voddetail/40305.html<br>
+www.zs87.cn/voddetail/164945.html<br>
+www.zs87.cn/voddetail/162278.html<br>
+www.zs87.cn/voddetail/63231.html<br>
+www.zs87.cn/voddetail/128775.html<br>
+www.zs87.cn/voddetail/73836.html<br>
+www.zs87.cn/voddetail/152742.html<br>
+www.zs87.cn/voddetail/126855.html<br>
+www.zs87.cn/voddetail/28502.html<br>
+www.zs87.cn/voddetail/129043.html<br>
+www.zs87.cn/voddetail/159220.html<br>
+www.zs87.cn/voddetail/105256.html<br>
+www.zs87.cn/voddetail/102194.html<br>
+www.zs87.cn/voddetail/98541.html<br>
+www.zs87.cn/voddetail/108191.html<br>
+www.zs87.cn/voddetail/633.html<br>
+www.zs87.cn/voddetail/129342.html<br>
+www.zs87.cn/voddetail/14750.html<br>
+www.zs87.cn/voddetail/83300.html<br>
+www.zs87.cn/voddetail/162788.html<br>
+www.zs87.cn/voddetail/115482.html<br>
+www.zs87.cn/voddetail/22017.html<br>
+www.zs87.cn/voddetail/64517.html<br>
+www.zs87.cn/voddetail/56429.html<br>
+www.zs87.cn/voddetail/139398.html<br>
+www.zs87.cn/voddetail/161677.html<br>
+www.zs87.cn/voddetail/23746.html<br>
+www.zs87.cn/voddetail/181403.html<br>
+www.zs87.cn/voddetail/1475.html<br>
+www.zs87.cn/voddetail/66595.html<br>
+www.zs87.cn/voddetail/35077.html<br>
+www.zs87.cn/voddetail/59280.html<br>
+www.zs87.cn/voddetail/126717.html<br>
+www.zs87.cn/voddetail/22930.html<br>
+www.zs87.cn/voddetail/20048.html<br>
+www.zs87.cn/voddetail/173228.html<br>
+www.zs87.cn/voddetail/9979.html<br>
+www.zs87.cn/voddetail/75727.html<br>
+www.zs87.cn/voddetail/156116.html<br>
+www.zs87.cn/voddetail/53757.html<br>
+www.zs87.cn/voddetail/138552.html<br>
+www.zs87.cn/voddetail/66336.html<br>
+www.zs87.cn/voddetail/126148.html<br>
+www.zs87.cn/voddetail/37123.html<br>
+www.zs87.cn/voddetail/185745.html<br>
+www.zs87.cn/voddetail/178925.html<br>
+www.zs87.cn/voddetail/96619.html<br>
+www.zs87.cn/voddetail/43457.html<br>
+www.zs87.cn/voddetail/140968.html<br>
+www.zs87.cn/voddetail/166565.html<br>
+www.zs87.cn/voddetail/38845.html<br>
+www.zs87.cn/voddetail/136321.html<br>
+www.zs87.cn/voddetail/180990.html<br>
+www.zs87.cn/voddetail/107518.html<br>
+www.zs87.cn/voddetail/12550.html<br>
+www.zs87.cn/voddetail/58063.html<br>
+www.zs87.cn/voddetail/2136.html<br>
+www.zs87.cn/voddetail/171985.html<br>
+www.zs87.cn/voddetail/106451.html<br>
+www.zs87.cn/voddetail/162925.html<br>
+www.zs87.cn/voddetail/137232.html<br>
+www.zs87.cn/voddetail/86874.html<br>
+www.zs87.cn/voddetail/29480.html<br>
+www.zs87.cn/voddetail/11307.html<br>
+www.zs87.cn/voddetail/101849.html<br>
+www.zs87.cn/voddetail/83719.html<br>
+www.zs87.cn/voddetail/50401.html<br>
+www.zs87.cn/voddetail/131476.html<br>
+www.zs87.cn/voddetail/5000.html<br>
+www.zs87.cn/voddetail/96608.html<br>
+www.zs87.cn/voddetail/38568.html<br>
+www.zs87.cn/voddetail/132684.html<br>
+www.zs87.cn/voddetail/60841.html<br>
+www.zs87.cn/voddetail/135497.html<br>
+www.zs87.cn/voddetail/88068.html<br>
+www.zs87.cn/voddetail/74371.html<br>
+www.zs87.cn/voddetail/183680.html<br>
+www.zs87.cn/voddetail/20056.html<br>
+www.zs87.cn/voddetail/176734.html<br>
+www.zs87.cn/voddetail/5547.html<br>
+www.zs87.cn/voddetail/67633.html<br>
+www.zs87.cn/voddetail/104333.html<br>
+www.zs87.cn/voddetail/172232.html<br>
+www.zs87.cn/voddetail/162341.html<br>
+www.zs87.cn/voddetail/51181.html<br>
+www.zs87.cn/voddetail/6756.html<br>
+www.zs87.cn/voddetail/138500.html<br>
+www.zs87.cn/voddetail/55914.html<br>
+www.zs87.cn/voddetail/23717.html<br>
+www.zs87.cn/voddetail/4249.html<br>
+www.zs87.cn/voddetail/102646.html<br>
+www.zs87.cn/voddetail/21042.html<br>
+www.zs87.cn/voddetail/117233.html<br>
+www.zs87.cn/voddetail/145226.html<br>
+www.zs87.cn/voddetail/1717.html<br>
+www.zs87.cn/voddetail/117259.html<br>
+www.zs87.cn/voddetail/68533.html<br>
+www.zs87.cn/voddetail/32675.html<br>
+www.zs87.cn/voddetail/120841.html<br>
+www.zs87.cn/voddetail/184063.html<br>
+</p>
+
+            
+        </article>
+
+        
+    </main>
+
+    <!-- 网站页脚 -->
+    <footer class="site-footer">
+        <div class="container footer-content">
+            <div class="footer-logo">技术文档库</div>
+            <p class="footer-description">
+                专注于技术文档整理、开发实践经验与实用教程汇总，为开发者提供清晰可靠的参考资料。
+            </p>
+            
+            <div class="copyright">
+                <p>©  技术文档分享与实践指南. 本站内容遵循知识共享协议.</p>
+                
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
