@@ -23,7 +23,7 @@ except ImportError:
 
 # 配置文件
 CONFIG = {
-    "api_key": "sk-b87abdc445084a47a7ef45219025a6db",  # 直接写你的真实 Key
+    "api_key": "your-deepseek-api-key-here",  # 替换为你的真实 DeepSeek API Key
     "api_url": "https://api.deepseek.com/v1/chat/completions",
     "model": "deepseek-chat",
     "max_tokens": 6000,  # 生成足够的内容
